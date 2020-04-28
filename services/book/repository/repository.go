@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	errBookNotFound = errors.Error("book not found")
+	errBookNotFound = errors.NotFound("book")
 )
 
 type Repository interface {

@@ -42,6 +42,8 @@ func errTypeStatusCode(errType errors2.Type) int {
 	switch errType {
 	case errors2.TypeBadRequest:
 		return http.StatusBadRequest
+	case errors2.TypeNotFound:
+		return http.StatusNotFound
 	default:
 		return http.StatusBadRequest
 	}

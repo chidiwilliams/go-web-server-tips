@@ -7,6 +7,8 @@ type Type string
 const (
 	// TypeBadRequest is used for HTTP 400-like errors.
 	TypeBadRequest Type = "bad_request_error"
+	// TypeNotFound is used for HTTP 404-like errors.
+	TypeNotFound Type = "not_found_error"
 )
 
 // AppError is an implementation of error with types to
@@ -30,5 +32,13 @@ func Error(text string) error {
 	return &AppError{
 		text:    text,
 		errType: TypeBadRequest,
+	}
+}
+
+// NotFound returns an AppError with a TypeNotFound type.
+func NotFound(entity string) error {
+	return &AppError{
+		text:    entity + " not found",
+		errType: TypeNotFound,
 	}
 }
