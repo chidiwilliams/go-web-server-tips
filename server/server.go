@@ -7,13 +7,13 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/chidiwilliams/go-web-server-tips/server/handlers"
-	"github.com/chidiwilliams/go-web-server-tips/server/handlers/books"
+	book2 "github.com/chidiwilliams/go-web-server-tips/server/handlers/book"
 	"github.com/chidiwilliams/go-web-server-tips/services/book"
 	"github.com/chidiwilliams/go-web-server-tips/services/book/repository"
 )
 
 var (
-	bookHandler books.BookHandler
+	bookHandler book2.Handler
 )
 
 // Server configures and returns a new http.Server
@@ -44,7 +44,7 @@ func init() {
 	_ = repository.NewMongoRepository(mongoDB)
 
 	bookService := book.NewService(bookRepository)
-	bookHandler = books.NewBookHandler(bookService)
+	bookHandler = book2.NewBookHandler(bookService)
 }
 
 func fatalIfErr(err error) {

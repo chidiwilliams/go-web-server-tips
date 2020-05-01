@@ -1,4 +1,4 @@
-package books
+package book
 
 import "github.com/chidiwilliams/go-web-server-tips/models"
 

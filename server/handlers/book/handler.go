@@ -1,4 +1,4 @@
-package books
+package book
 
 import (
 	"net/http"
@@ -12,16 +12,16 @@ import (
 	"github.com/chidiwilliams/go-web-server-tips/services/book"
 )
 
-type BookHandler interface {
+type Handler interface {
 	CreateBook(w http.ResponseWriter, r *http.Request) error
 	GetBook(w http.ResponseWriter, r *http.Request) error
 }
 
-func NewBookHandler(bookService book.Service) BookHandler {
-	return bookHandler{bookService}
+func NewBookHandler(bookService book.Service) Handler {
+	return handler{bookService}
 }
 
-type bookHandler struct {
+type handler struct {
 	bookService book.Service
 }
 
@@ -29,7 +29,7 @@ type createBookRequestBody struct {
 	Title string `json:"title"`
 }
 
-func (u bookHandler) CreateBook(w http.ResponseWriter, r *http.Request) error {
+func (u handler) CreateBook(w http.ResponseWriter, r *http.Request) error {
 	requestBody := &createBookRequestBody{}
 	if err := decoder.DecodeJSON(r.Body, requestBody); err != nil {
 		return err
@@ -43,7 +43,7 @@ func (u bookHandler) CreateBook(w http.ResponseWriter, r *http.Request) error {
 	return responses.OK("We've added your book!", createBookResponse{Book: newBook}).ToJSON(w)
 }
 
-func (u bookHandler) GetBook(w http.ResponseWriter, r *http.Request) error {
+func (u handler) GetBook(w http.ResponseWriter, r *http.Request) error {
 	id := mux.Vars(r)["bookID"]
 	if !bson.IsObjectIdHex(id) {
 		return errors.Error("invalid vendor ID")
